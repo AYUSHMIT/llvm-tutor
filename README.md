@@ -37,7 +37,7 @@ are interested in similar tutorial for Clang.
 
 Experience LLVM passes with our **automated demo** featuring:
 - 🎯 **One-click setup** with GitHub Codespaces and Dev Containers
-- 🔄 **Automated CI/CD** building across LLVM versions 16 and 17
+- 🔄 **Automated CI/CD** building across LLVM versions 18 and 21
 - 📊 **Interactive visualizations** of IR and Control Flow Graphs
 - 📝 **Step-by-step tutorial** with copy-paste commands
 

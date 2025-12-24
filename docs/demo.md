@@ -51,7 +51,7 @@ The exact pass plugin names in `llvm-tutor` are:
 General invocation pattern:
 
 ```bash
-opt-17 -load-pass-plugin build/lib/lib<PassName>.so -passes=<pass-pipeline> -disable-output demo/out/hello.bc
+opt-21 -load-pass-plugin build/lib/lib<PassName>.so -passes=<pass-pipeline> -disable-output demo/out/hello.bc
 ```
 
 Examples:

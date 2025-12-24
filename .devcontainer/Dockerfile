@@ -5,9 +5,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y wget gnupg lsb-release software-properties-common && \
-    wget https://apt.llvm.org/llvm-snapshot.gpg.key -O /tmp/llvm.key && \
-    apt-key add /tmp/llvm.key && \
-    add-apt-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ llvm-toolchain-$(lsb_release -cs)-21 main" && \
+    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/$(lsb_release -cs)/ llvm-toolchain-$(lsb_release -cs)-21 main" | tee /etc/apt/sources.list.d/llvm.list && \
     apt-get update && \
     apt-get install -y \
       clang-21 llvm-21 llvm-21-dev lld-21 \
