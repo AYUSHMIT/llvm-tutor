@@ -1,0 +1,26 @@
+{
+  "name": "llvm-tutor-demo",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".devcontainer"
+  },
+  "postCreateCommand": "bash -lc 'cmake -G Ninja -S . -B build -DLT_LLVM_INSTALL_DIR=/usr/lib/llvm-17 && cmake --build build'",
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "ms-vscode.cpptools",
+        "llvm-vs-code-extensions.vscode-llvm",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.makefile-tools"
+      ]
+    }
+  },
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
+  "forwardPorts": [],
+  "mounts": []
+}
