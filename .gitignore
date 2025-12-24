@@ -31,5 +31,10 @@
 *.out
 *.app
 
+# Build directories
+build/
+Build/
+cmake-build-*/
+
 # Demo output artifacts
 demo/out/
