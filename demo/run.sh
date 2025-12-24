@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-LLVM_VERSION="${1:-17}"
+LLVM_VERSION="${1:-21}"
 OUT_DIR="demo/out"
 SAMPLES_DIR="demo/samples"
 
@@ -39,13 +39,15 @@ echo "[*] Generating CFG graphs..."
 pushd "${OUT_DIR}" >/dev/null
 ${OPT} -passes=dot-cfg hello.bc -disable-output 2>/dev/null || true
 ${OPT} -passes=dot-cfg loop.bc -disable-output 2>/dev/null || true
-# Convert all .dot to .png
+# Convert all .dot files (including hidden ones) to .png
+shopt -s nullglob dotglob
 for f in *.dot; do
   if [ -f "$f" ]; then
     echo "  Converting $f to PNG..."
     dot -Tpng "$f" -o "${f%.dot}.png"
   fi
 done
+shopt -u nullglob dotglob
 popd >/dev/null
 
 echo "[*] Done. See ${OUT_DIR} for IR, logs, and graphs."

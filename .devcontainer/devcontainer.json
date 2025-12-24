@@ -4,7 +4,7 @@
     "dockerfile": "Dockerfile",
     "context": ".devcontainer"
   },
-  "postCreateCommand": "bash -lc 'cmake -G Ninja -S . -B build -DLT_LLVM_INSTALL_DIR=/usr/lib/llvm-17 && cmake --build build'",
+  "postCreateCommand": "bash -lc 'cmake -G Ninja -S . -B build -DLT_LLVM_INSTALL_DIR=/usr/lib/llvm-21 && cmake --build build'",
   "features": {},
   "customizations": {
     "vscode": {

@@ -4,16 +4,16 @@ This demo compiles small C programs to LLVM bitcode, runs out-of-tree tutorial p
 
 ## Prerequisites
 
-- LLVM/Clang (16/17/18 or later)
+- LLVM/Clang (21 or later recommended; 18+ may work with some passes)
 - CMake, Ninja
 - Graphviz (`dot`)
 
 ## Quickstart (Local)
 
 ```bash
-cmake -G Ninja -S . -B build -DLT_LLVM_INSTALL_DIR=/usr/lib/llvm-17
+cmake -G Ninja -S . -B build -DLT_LLVM_INSTALL_DIR=/usr/lib/llvm-21
 cmake --build build
-bash demo/run.sh 17
+bash demo/run.sh 21
 ```
 
 Artifacts will be in `demo/out/`:
@@ -27,7 +27,7 @@ Artifacts will be in `demo/out/`:
 Open the repo in Codespaces and wait for the Dev Container to finish provisioning. It will build automatically. Then run:
 
 ```bash
-bash demo/run.sh 17
+bash demo/run.sh 21
 code demo/out
 ```
 
@@ -57,19 +57,19 @@ opt-17 -load-pass-plugin build/lib/lib<PassName>.so -passes=<pass-pipeline> -dis
 Examples:
 ```bash
 # Run HelloWorld pass
-opt-17 -load-pass-plugin build/lib/libHelloWorld.so -passes=hello-world -disable-output demo/out/hello.bc
+opt-21 -load-pass-plugin build/lib/libHelloWorld.so -passes=hello-world -disable-output demo/out/hello.bc
 
 # Run StaticCallCounter analysis
-opt-17 -load-pass-plugin build/lib/libStaticCallCounter.so -passes="print<static-cc>" -disable-output demo/out/hello.bc
+opt-21 -load-pass-plugin build/lib/libStaticCallCounter.so -passes="print<static-cc>" -disable-output demo/out/hello.bc
 
 # Run DynamicCallCounter transformation
-opt-17 -load-pass-plugin build/lib/libDynamicCallCounter.so -passes=dynamic-cc demo/out/hello.bc -o demo/out/hello_dcc.bc
+opt-21 -load-pass-plugin build/lib/libDynamicCallCounter.so -passes=dynamic-cc demo/out/hello.bc -o demo/out/hello_dcc.bc
 ```
 
 ## Visualizing CFG
 
 ```bash
-opt-17 -passes=dot-cfg demo/out/hello.bc -disable-output
+opt-21 -passes=dot-cfg demo/out/hello.bc -disable-output
 dot -Tpng .square.dot -o square.png
 dot -Tpng .main.dot -o main.png
 ```
@@ -112,13 +112,13 @@ Transform arithmetic operations using Mixed Boolean-Arithmetic:
 
 ```bash
 # Original addition
-clang-17 -O0 -emit-llvm -c demo/samples/loop.c -o demo/out/loop.bc
-opt-17 -passes=dot-cfg demo/out/loop.bc -disable-output
+clang-21 -O0 -emit-llvm -c demo/samples/loop.c -o demo/out/loop.bc
+opt-21 -passes=dot-cfg demo/out/loop.bc -disable-output
 dot -Tpng .sum_n.dot -o demo/out/loop_before.png
 
 # Apply MBA obfuscation
-opt-17 -load-pass-plugin build/lib/libMBAAdd.so -passes=mba-add demo/out/loop.bc -o demo/out/loop_mba.bc
-opt-17 -passes=dot-cfg demo/out/loop_mba.bc -disable-output
+opt-21 -load-pass-plugin build/lib/libMBAAdd.so -passes=mba-add demo/out/loop.bc -o demo/out/loop_mba.bc
+opt-21 -passes=dot-cfg demo/out/loop_mba.bc -disable-output
 dot -Tpng .sum_n.dot -o demo/out/loop_after.png
 
 # Compare the CFGs
@@ -128,16 +128,16 @@ dot -Tpng .sum_n.dot -o demo/out/loop_after.png
 Analyze function call patterns:
 
 ```bash
-clang-17 -O0 -emit-llvm -c demo/samples/hello.c -o demo/out/hello.bc
-opt-17 -load-pass-plugin build/lib/libStaticCallCounter.so -passes="print<static-cc>" -disable-output demo/out/hello.bc
+clang-21 -O0 -emit-llvm -c demo/samples/hello.c -o demo/out/hello.bc
+opt-21 -load-pass-plugin build/lib/libStaticCallCounter.so -passes="print<static-cc>" -disable-output demo/out/hello.bc
 ```
 
 ### Example 3: Basic Block Duplication
 Duplicate basic blocks for code obfuscation:
 
 ```bash
-opt-17 -load-pass-plugin build/lib/libDuplicateBB.so -passes=duplicate-bb demo/out/loop.bc -o demo/out/loop_dup.bc
-llvm-dis-17 demo/out/loop_dup.bc -o demo/out/loop_dup.ll
+opt-21 -load-pass-plugin build/lib/libDuplicateBB.so -passes=duplicate-bb demo/out/loop.bc -o demo/out/loop_dup.bc
+llvm-dis-21 demo/out/loop_dup.bc -o demo/out/loop_dup.ll
 diff -u demo/out/loop.ll demo/out/loop_dup.ll
 ```
 

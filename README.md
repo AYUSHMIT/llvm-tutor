@@ -44,9 +44,9 @@ Experience LLVM passes with our **automated demo** featuring:
 ## Quick Start (3 commands!)
 
 ```bash
-cmake -G Ninja -S . -B build -DLT_LLVM_INSTALL_DIR=/usr/lib/llvm-17
+cmake -G Ninja -S . -B build -DLT_LLVM_INSTALL_DIR=/usr/lib/llvm-21
 cmake --build build
-bash demo/run.sh 17
+bash demo/run.sh 21
 ```
 
 **What you get:**
@@ -69,20 +69,20 @@ ls demo/out/
 Click the green "Code" button → "Codespaces" → "Create codespace on main"
 
 The environment will automatically:
-1. Install LLVM 17 toolchain with Clang, opt, and all dev tools
+1. Install LLVM 21 toolchain with Clang, opt, and all dev tools
 2. Build all tutorial passes
 3. Set up VSCode with C++ and LLVM extensions
 
 Then run:
 ```bash
-bash demo/run.sh 17
+bash demo/run.sh 21
 code demo/out  # Browse generated artifacts
 ```
 
 ## CI/CD with Demo Artifacts
 
 Every push triggers our CI workflow that:
-- Builds the project with LLVM 16 and 17
+- Builds the project with LLVM 18 and 21
 - Runs the automated demo
 - Uploads IR, CFG graphs, and logs as artifacts
 
