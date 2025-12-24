@@ -2,6 +2,7 @@ llvm-tutor
 =========
 [![Apple Silicon](https://github.com/banach-space/llvm-tutor/actions/workflows/apple-silicon.yml/badge.svg?branch=main)](https://github.com/banach-space/llvm-tutor/actions/workflows/apple-silicon.yml)
 [![x86-Ubuntu](https://github.com/banach-space/llvm-tutor/actions/workflows/x86-ubuntu.yml/badge.svg?branch=main)](https://github.com/banach-space/llvm-tutor/actions/workflows/x86-ubuntu.yml)
+[![CI (Build & Demo)](https://github.com/AYUSHMIT/llvm-tutor/actions/workflows/ci.yml/badge.svg)](https://github.com/AYUSHMIT/llvm-tutor/actions/workflows/ci.yml)
 
 
 Example LLVM passes - based on **LLVM 21**
@@ -31,7 +32,86 @@ files](https://github.com/banach-space/llvm-tutor/blob/main/inputs).
 Visit [**clang-tutor**](https://github.com/banach-space/clang-tutor/) if you
 are interested in similar tutorial for Clang.
 
+🚀 One-Click Demo
+=================
+
+Experience LLVM passes with our **automated demo** featuring:
+- 🎯 **One-click setup** with GitHub Codespaces and Dev Containers
+- 🔄 **Automated CI/CD** building across LLVM versions 18 and 21
+- 📊 **Interactive visualizations** of IR and Control Flow Graphs
+- 📝 **Step-by-step tutorial** with copy-paste commands
+
+## Quick Start (3 commands!)
+
+```bash
+cmake -G Ninja -S . -B build -DLT_LLVM_INSTALL_DIR=/usr/lib/llvm-21
+cmake --build build
+bash demo/run.sh 21
+```
+
+**What you get:**
+- ✅ Compiled LLVM bitcode from C samples
+- ✅ Human-readable IR (`.ll` files)
+- ✅ CFG visualizations (`.png` graphs)
+- ✅ Pass execution logs showing transformations
+
+**View the results:**
+```bash
+ls demo/out/
+# hello.bc, hello.ll, loop.bc, loop.ll
+# .main.dot, .square.dot, .sum_n.dot (CFG)
+# *.png (CFG images)
+# hello_pass.log, static_cc_pass.log
+```
+
+## Launch in Codespaces
+
+Click the green "Code" button → "Codespaces" → "Create codespace on main"
+
+The environment will automatically:
+1. Install LLVM 21 toolchain with Clang, opt, and all dev tools
+2. Build all tutorial passes
+3. Set up VSCode with C++ and LLVM extensions
+
+Then run:
+```bash
+bash demo/run.sh 21
+code demo/out  # Browse generated artifacts
+```
+
+## CI/CD with Demo Artifacts
+
+Every push triggers our CI workflow that:
+- Builds the project with LLVM 18 and 21
+- Runs the automated demo
+- Uploads IR, CFG graphs, and logs as artifacts
+
+View artifacts in the [Actions tab](../../actions) after each workflow run.
+
+## What the Demo Shows
+
+The `demo/run.sh` script demonstrates:
+
+1. **Compiling to LLVM IR**: Convert C code to bitcode (`.bc`) and human-readable IR (`.ll`)
+2. **Running analysis passes**: Execute `HelloWorld` (prints functions) and `StaticCallCounter` (counts calls)
+3. **Generating CFG visualizations**: Create control flow graphs and convert to PNG
+4. **Comparing before/after**: See how passes transform your code
+
+Sample programs:
+- `hello.c` - Simple function with multiplication and printf
+- `loop.c` - Loop example for demonstrating optimization opportunities
+
+## Documentation
+
+📖 **[Full Demo Guide](docs/demo.md)** - Detailed tutorial with:
+- Prerequisites and setup instructions
+- All available pass names and usage examples
+- Visualization techniques
+- Troubleshooting guide
+- Advanced examples (MBA obfuscation, basic block duplication, etc.)
+
 ### Table of Contents
+* [🚀 One-Click Demo](#-one-click-demo)
 * [HelloWorld: Your First Pass](#helloworld-your-first-pass)
 * Part 1: **llvm-tutor** in more detail
   * [Development Environment](#development-environment)
